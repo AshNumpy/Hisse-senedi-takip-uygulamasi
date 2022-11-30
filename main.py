@@ -3,8 +3,9 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from datetime import date
-
+from components import my_container
 st.set_page_config(layout="wide")
+
 d1, d2,d3 = st.columns(3)
 with d1:
     st.selectbox(
@@ -25,7 +26,7 @@ selected = option_menu(
         orientation = "horizontal",
         default_index = 1
 )
-
+matitle = my_container
 if selected == "Temel Analiz":
     st.title(f"{selected} Verileri")
 if selected == "Grafikler":
