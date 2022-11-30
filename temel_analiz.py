@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np 
-import yfinance 
 import streamlit as st
 
 # -- modules -- 
@@ -15,12 +14,14 @@ dividends = get_dividends(item="EREGL.IS")
 df = get_dataset(item="EREGL.IS")
 
 with st.container():
-    left_side, right_side = st.columns(2)
-    with left_side:
+    left, middle, right = st.columns(3)
+    with left:
         st.subheader("Intro to Dataframe")
         st.dataframe(df)
-    with right_side:
+    with middle:
         st.subheader("Dividends")
         st.dataframe(dividends)
+    with right:
+        st.subheader("Summary Statistics")
+        st.table(df.describe())
     st.write("---")
-    

@@ -28,7 +28,7 @@ if selected == "Temel Analiz":
     st.title(f"You have selected {selected}")
 if selected == "Grafikler":
     st.title(f"You have selected {selected}")
-if selected == "contact":
+if selected == "ZS Analiz":
     st.title(f"You have selected {selected}")
 
 

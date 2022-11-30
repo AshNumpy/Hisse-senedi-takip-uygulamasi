@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 
-def get_dataset(item, period='max', interval='1d'):
+def get_dataset(item, period='5y', interval='1d'):
     """
     Verilerini çekmek istediğin hisse senedinin Yahoo finance kodunu item e eşitleyip gir.
 
@@ -15,13 +15,14 @@ def get_dataset(item, period='max', interval='1d'):
     
     df = df.reset_index()
     df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
+    df['Date'] = df['Date'].dt.date
 
     df = df.set_index('Date')
 
     return df 
 
 
-def get_dividends(item, period='max'):
+def get_dividends(item):
     """
     temettülerini istediğin hisse senedinin yahoo finance kodunu item e eşitleyerek girdi yap
 
@@ -33,9 +34,7 @@ def get_dividends(item, period='max'):
     dividends = pd.DataFrame(tracker.dividends)
     dividends = dividends.reset_index()
 
-    dividends['Date'] = pd.to_datetime(dividends['Date'])
+    dividends['Date'] = pd.to_datetime(dividends['Date']).dt.date
     dividends = dividends.iloc[1:,]
-
-    dividends = dividends.set_index('Date')
 
     return dividends
