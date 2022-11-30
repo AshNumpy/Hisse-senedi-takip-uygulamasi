@@ -13,7 +13,7 @@ st.set_page_config(page_title="Hisse Takipcisi", page_icon=':bar_charts:', layou
 dividends = get_dividends(item="EREGL.IS")
 df = get_dataset(item="EREGL.IS")
 
-with st.container():
+def temel_analiz():
     left, middle, right = st.columns(3)
     with left:
         st.subheader("Intro to Dataframe")
