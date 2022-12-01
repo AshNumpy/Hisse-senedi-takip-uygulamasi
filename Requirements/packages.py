@@ -1,6 +1,6 @@
 import pip 
 
-libraries = ["Pandas", "Numpy", "prophet", "streamlit", "plotly", "matplotlib"]
+libraries = ["Pandas", "Numpy", "prophet", "streamlit", "plotly", "matplotlib", "sklearn", "mpld3"]
 
 for lib in libraries:
     try:
