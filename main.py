@@ -9,7 +9,7 @@ d1, d2,d3 = st.columns(3)
 with d1:
     st.selectbox(
     "Hisse Adı",
-    (semboller.SEMBOL)
+    (semboller)
 )
 
 with d2: 
