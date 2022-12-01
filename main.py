@@ -18,17 +18,20 @@ with d3:
     
 selected = option_menu(
         menu_title = None,
-        options =["Temel Analiz", "Grafikler", "ZS Analiz"],
-        icons=["bar-chart", "graph-up", "clock-history"],
+        options =["Veriler","Temel Analiz", "Grafikler", "ZS Analiz", "Makine Öğrenmesi"],
+        icons=["bookshelf","bar-chart", "graph-up", "clock-history", "cpu"],
         orientation = "horizontal",
         default_index = 1
 )
-
+if selected == "Veriler":
+    st.title(f"You have selected {selected}")
 if selected == "Temel Analiz":
     st.title(f"You have selected {selected}")
 if selected == "Grafikler":
     st.title(f"You have selected {selected}")
 if selected == "ZS Analiz":
+    st.title(f"You have selected {selected}")
+if selected == "Yapay Zeka":
     st.title(f"You have selected {selected}")
 
 
