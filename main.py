@@ -7,6 +7,7 @@ from data import get_dividends
 from data import semboller
 
 
+
 st.set_page_config(layout="wide")
 d1,d2,d3,d4 = st.columns(4)
 

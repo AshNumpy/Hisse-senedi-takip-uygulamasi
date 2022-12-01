@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 
+
 semboller = pd.read_csv('https://raw.githubusercontent.com/f1rzen/halkbank-skorkart-scraper/main/hisseisimleri.csv')
 def get_dataset(item, period='5y', interval='1d'):
     """
