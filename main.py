@@ -2,13 +2,14 @@
 
 import streamlit as st
 from streamlit_option_menu import option_menu
+from sembol_listesi import semboller
 
 st.set_page_config(layout="wide")
 d1, d2,d3 = st.columns(3)
 with d1:
     st.selectbox(
     "Hisse Adı",
-    ('LIDER.IS', 'BRSAN.IS', 'IPEKE.IS')
+    (semboller.SEMBOL)
 )
 
 with d2: 
