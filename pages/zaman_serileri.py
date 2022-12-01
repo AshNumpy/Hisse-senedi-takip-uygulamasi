@@ -7,14 +7,14 @@ import streamlit as st
 from data import get_dataset
 from data import get_dividends
 
-df = get_dataset("EREGL.IS")
+df = get_dataset("EREGL.IS", period="3y")
 divs = get_dividends("EREGL.IS")
 df = df.sort_index(ascending=False)
 
 
 def explore():
     st.set_page_config(layout="wide")
-    st.subheader("Verilerin Keşfi")
+    st.subheader("Exploring")
     with st.container():
         left, right = st.columns((1,2))
         with left:
@@ -23,7 +23,7 @@ def explore():
         with right:
             import plotly.express as px
 
-            column = st.selectbox("Bir grafiklendirme seç", ["Close", "Open", "Volume"])
+            column = st.selectbox("Choose a Column Type", ["Close", "Open", "Volume"])
 
             fig = px.line(df, x=df.index, y=column)
             # fig.add_scatter(x=df.index, y=df['Open'], mode='lines')
@@ -40,8 +40,7 @@ def explore():
 
         with col1:
             if metrik_zamani == "Son 1 Yıl":
-                st.write("xxx")
-                df_yil = df.groupby("")
+                df_yil = df.reset_index().groupby("Date")[column] 
             st.dataframe(df.describe())
             st.metric(f"Ortalama{column}", value=np.round(df.describe().loc["mean",column],2))
 
