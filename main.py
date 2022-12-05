@@ -15,26 +15,46 @@ with d1:
 )
 
 with d2:
+    f_secenek = {"60m":"15 Dakika", "1d": "Günlük", "5d": "5 Günlük", "1wk": "Haftalık", "mo": " Aylık", "3mo": "3 Aylık"}
+    def format_func(option):
+        return f_secenek[option]
     frekans = st.selectbox(
         "Frekans",
-        # 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
-        ("Günlük", "5 Günlük", "Haftalık", "3 Aylık")
+        f_secenek.keys(), 
+        format_func=lambda x:f_secenek[ x ],
+        index =1
+        
     )
+        
     
-with d3: 
-    st.date_input('Başlangıç Tarihi')
     
-with d4:
-    st.date_input('Bitiş Tarihi')
+with d3:
+    p_secenek = {"5d": "5 Günlük", "1mo": "1 Aylık", "3mo": "3 Aylık", "6mo": "6 Aylık", "1y": "1 Yıllık", "2y":"2 Yıllık", "5y": "5 Yıllık", "10y": "10 Yıllık", "ytd": "Yılbaşından bu güne", "max": "Max"}
+
+    def format_func(option):
+        return p_secenek[option]
+
+    periyot = st.selectbox(
+        "Periyot",
+        p_secenek.keys(), 
+        format_func=lambda x:p_secenek[ x ],
+        index = 5,
+        help = "Günlük veriler ile çalışılacaksa önerilen periyot Süresi 2 Yıldır"
+    )
+# with d3: 
+#     st.date_input('Başlangıç Tarihi')
+    
+# with d4:
+#     st.date_input('Bitiş Tarihi')
 
 
-    
 selected = option_menu(
         menu_title = None,
         options =["Veriler","Temel Analiz", "Grafikler", "ZS Analiz", "Makine Öğrenmesi", "Derin Öğrenme"],
         icons=["bookshelf","bar-chart", "graph-up", "clock-history", "cpu", "gpu-card"],
         orientation = "horizontal",
-        default_index = 0
+        default_index = 2
+        
 )
 
 if selected == "Veriler":
@@ -54,7 +74,7 @@ if selected == "Temel Analiz":
     st.title(f"You have selected {selected}")
     
 if selected == "Grafikler":
-    df = get_dataset(f"{hisse}.IS")
+    df = get_dataset(f"{hisse}.IS", periyot, frekans)
     st.line_chart(df['Close'])
     
 if selected == "ZS Analiz":
