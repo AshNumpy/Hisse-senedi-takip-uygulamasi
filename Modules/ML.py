@@ -7,19 +7,24 @@ def get_accuracy(df, date_column, value_column, train_size=0.85, freq='d', predi
     df: dataframe\n
     date_column: Name of the Date column. If date column on the index you should write just name of that and keep moving.\n
     value_column: Price or whatever column that has the values.\n
-    train_size: !! Where should function cut off the dfset as train.\n
+    train_size: !! Where should function cut off the df as train.\n
     freq: Frequency of the df , default = Daily.\n
     \t\t'D':Daily, 'W':Weekly, 'Y':Yearly\n
     prediction_periods: How many periods you want to do forecast.\n
     country_name: Name of the country that dfs belong it. It necessary for the holidays effect, default = TR\n
     \n
-    Libraries: prophet from facebook\n
+    Libraries:\n
+    ~ prophet\n
+    ~ sklearn
     \n
     Returns:\n
     model: Forecasting model.\n
     forecast: Predicted values.\n
-    training_df: Training df.\n
-    test_df: Test df\n
+    train: Training dataframe.\n
+    test: Test dataframe\n
+    MAE: Mean Absolute Error\n
+    RMSE: Root Mean Squared Error\n
+    MAPE: Mean Absolute Percentage Error
     """
 
     # importing the librarie(s)
@@ -47,12 +52,22 @@ def get_accuracy(df, date_column, value_column, train_size=0.85, freq='d', predi
     
     # make predictions
     forecast = model.predict(future)
-    print("Process is Succesfully DONE!")
+    print("Accuracy Process is Succesfully DONE!")
     
-    return acc_model, acc_forecast, acc_train, acc_test
+    # calculate accuracy
+    y_pred = forecast[forecast['ds'].isin(test['ds'])]['yhat']
+
+    from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
+    
+    MAE = mean_absolute_error(test['y'], y_pred)
+    RMSE = np.sqrt(mean_squared_error(test['y'], y_pred))
+    MAPE = mean_absolute_percentage_error(test['y'], y_pred)
 
 
-def do_fitting(df, date_column, value_column, freq='d', prediction_periods=30, country_code='TR'):
+    return model, forecast, MAE, RMSE, MAPE
+
+
+def do_fitting(df, date_column, value_column, freq='d', prediction_periods=42, country_code='TR'):
     
     # importing the librarie(s)
     from prophet import Prophet
@@ -67,7 +82,7 @@ def do_fitting(df, date_column, value_column, freq='d', prediction_periods=30, c
     # model building
     model = Prophet()
     model.add_country_holidays(country_name=country_code)
-    model.fit(train)
+    model.fit(df)
     
     # set future times to do forecasting
     future = model.make_future_dataframe(periods=prediction_periods, freq=freq)
@@ -76,4 +91,4 @@ def do_fitting(df, date_column, value_column, freq='d', prediction_periods=30, c
     forecast = model.predict(future)
     print("Process is Succesfully DONE!")
     
-    return model, forecast, train, test
+    return model, forecast
