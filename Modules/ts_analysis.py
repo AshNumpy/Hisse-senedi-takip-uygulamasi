@@ -38,4 +38,4 @@ def ts_analysis(df, date_col, value_col, data_period, p, d, q, arima_model_type=
     # tahminler yap
     preds = arima_fit.predict()
     
-    return seasonal, trend, model, residuals, preds
+    return mevsimsellikler, trend, model, residuals, preds

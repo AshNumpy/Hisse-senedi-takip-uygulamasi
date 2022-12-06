@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 
-def get_accuracy(df, date_column, value_column, train_size=0.85, freq='d', prediction_periods=365, country_code='TR'):
+def get_accuracy(df, date_column, value_column, train_size=0.85, freq='d', prediction_periods=2, country_code='TR'):
     """"
     Inputs:\n
     df: dataframe\n
@@ -48,7 +48,7 @@ def get_accuracy(df, date_column, value_column, train_size=0.85, freq='d', predi
     model.fit(train)
     
     # set future times to do forecasting
-    future = model.make_future_dataframe(periods=prediction_periods, freq=freq)
+    future = model.make_future_dataframe(periods=int(len(test))*prediction_periods, freq=freq)
     
     # make predictions
     forecast = model.predict(future)
